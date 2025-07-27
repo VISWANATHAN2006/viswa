@@ -1,0 +1,69 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+# Data from your chart
+semesters = ['0','Sem1', 'Sem2', 'Sem3', 'Sem4', 'Sem5', 'Sem6']
+marks = [0,67, 72, 70, 75, 0, 0]  # Based on your image
+
+# Create figure and axis
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.set_xlim(0, len(semesters) - 1)
+ax.set_ylim(0, 80)
+plt.grid(axis='x', linestyle='--',alpha=0.8)
+plt.grid(axis='y', linestyle='--',alpha=0.8)
+ax.set_xticks(range(len(semesters)))
+ax.set_xticklabels(semesters)
+ax.set_ylabel('Percentage')
+ax.set_xlabel('Semester')
+ax.set_title('Marks per Semester')
+
+# Initialize line
+line, = ax.plot([], [], 'o-', color='blue')
+
+# Animation function
+def animate(frame):
+    x = np.arange(frame + 1)
+    y = marks[:frame + 1]
+    line.set_data(x, y)
+    return line,
+
+# Create animation
+ani = FuncAnimation(fig, animate, frames=len(semesters), interval=800, repeat=False)
+
+# Save the animation as MP4
+ani.save('marks_line_animation.mp4', writer='ffmpeg')
+
+plt.show()
+print()
+print()
+print()
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.animation import FuncAnimation
+
+# Data from your chart
+semesters = ['Sem1', 'Sem2', 'Sem3', 'Sem4','Sem5', 'Sem6']
+marks = [68, 72, 70, 78 ,0, 0]  # Approximate values from image
+
+# Create figure and axis
+fig, ax = plt.subplots(figsize=(8, 5))
+bars = ax.bar(semesters, [0, 0, 0, 0,0,0], color='skyblue')
+ax.set_ylim(0, 100)
+plt.grid(axis='y', linestyle='--',alpha=0.8)
+plt.grid(axis='x', linestyle='--',alpha=0.8)
+ax.set_ylabel('Percentage')
+ax.set_title('Marks per Semester')
+
+# Animation function
+def animate(frame):
+    for bar, mark in zip(bars, marks):
+        bar.set_height(mark * frame / 100)
+
+# Create animation
+ani = FuncAnimation(fig, animate, frames=100, interval=50)
+
+# Save the animation as MP4
+ani.save('marks_animation.mp4', writer='ffmpeg')
+
+plt.show()
